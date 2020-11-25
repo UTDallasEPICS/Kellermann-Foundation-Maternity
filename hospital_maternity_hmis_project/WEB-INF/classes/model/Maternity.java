@@ -1,5 +1,5 @@
 /*
- * Model for maternity form
+ * Model for maternity form, contains data structure for Maternity
  */
 
 package model;
@@ -17,7 +17,7 @@ public class Maternity implements Serializable {
     private Integer admissionNo;
     private String ancNo;
     private Integer ipdNo;
-    private Integer nin;
+    private String nin;
     private String clientSurname;
     private String clientGivenName;
     private Integer age;
@@ -121,14 +121,6 @@ public class Maternity implements Serializable {
         this.matId = matId;
     }
 
-    public Integer getIpdNo() {
-        return ipdNo;
-    }
-
-    public void setIpdNo(Integer ipdNo) {
-        this.ipdNo = ipdNo;
-    }
-
     public LocalDate getDateOfAdmission() {
         return dateOfAdmission;
     }
@@ -161,11 +153,19 @@ public class Maternity implements Serializable {
         this.ancNo = ancNo;
     }
 
-    public Integer getNin() {
+    public Integer getIpdNo() {
+        return ipdNo;
+    }
+
+    public void setIpdNo(Integer ipdNo) {
+        this.ipdNo = ipdNo;
+    }
+
+    public String getNin() {
         return nin;
     }
 
-    public void setNin(Integer nin) {
+    public void setNin(String nin) {
         this.nin = nin;
     }
 
@@ -924,7 +924,7 @@ public class Maternity implements Serializable {
     public Maternity() {}
 
     public Maternity(Integer matId, LocalDate dateOfAdmission, LocalTime timeOfAdmission, Integer admissionNo,
-                     String ancNo, Integer ipdNo, Integer nin, String clientSurname, String clientGivenName,
+                     String ancNo, Integer ipdNo, String nin, String clientSurname, String clientGivenName,
                      Integer age, String clientCategory, String villageId, String villageName, String parishId,
                      String parishName, String subcountyId, String subcountyName, String districtId,
                      String districtName, String phoneNumber, Integer gravidity, Integer parity,
