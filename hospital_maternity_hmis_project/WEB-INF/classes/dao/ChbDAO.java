@@ -16,6 +16,7 @@ import java.util.List;
 import model.Error;
 import model.Vht;
 import model.Maternity;
+import model.Antenatal;
 import model.Village;
 import model.Parish;
 import model.Subcounty;
@@ -161,7 +162,7 @@ public class ChbDAO implements Serializable
         try {
             Connection con;
 
-            System.out.println("ChbDAO.Get_Hmis_List");
+            System.out.println("ChbDAO.Get_Maternity_List");
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/bwindihospital_reduced";
             con = DriverManager.getConnection(url, "root", "potato");
@@ -178,13 +179,13 @@ public class ChbDAO implements Serializable
 
                 Maternity maternity = new Maternity();
 
-                maternity.setMatId(rs.getInt("maternityID"));
+                maternity.setMatId(rs.getInt("matId"));
                 maternity.setDateOfAdmission(rs.getDate("dateOfAdmission").toLocalDate());
                 maternity.setTimeOfAdmission(rs.getTime("timeOfAdmission").toLocalTime());
                 maternity.setAdmissionNo(rs.getInt("admissionNo"));
                 maternity.setAncNo(rs.getString("ancNo"));
                 maternity.setIpdNo(rs.getInt("ipdNo"));
-                maternity.setNin(rs.getInt("nin"));
+                maternity.setNin(rs.getString("nin"));
                 maternity.setClientSurname(rs.getString("clientSurname"));
                 maternity.setClientGivenName(rs.getString("clientGivenName"));
                 maternity.setAge(rs.getInt("age"));
@@ -277,7 +278,7 @@ public class ChbDAO implements Serializable
                 maternity.setDateOfDischarge(rs.getDate("dateOfDischarge").toLocalDate());
                 maternity.setTimeOfDischarge(rs.getTime("timeOfDischarge").toLocalTime());
                 maternity.setRecordDate(rs.getTimestamp("recordDate").toLocalDateTime());
-                maternity.setUserId(rs.getInt("userID"));
+                maternity.setUserId(rs.getInt("userId"));
                 maternity_list.add(maternity);
             }
             con.close();
@@ -286,6 +287,38 @@ public class ChbDAO implements Serializable
             ErrorDAO.Error_Add(new model.Error("ChbDAO", "Get_Hmis_List", " Message: " + ex.getMessage(), now));
             return null;
         }
+    }
+
+    public static List<Antenatal> Get_Antenatal_List() throws SQLException {
+        try {
+            Connection con;
+
+            System.out.println("ChbDAO.Get_Antenatal_List");
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/bwindihospital_reduced";
+            con = DriverManager.getConnection(url, "root", "potato");
+            now = LocalDateTime.now();
+
+
+            PreparedStatement stmt = con.prepareStatement("SELECT * From antenatal,village Where antenatal.antVillage=village.VillageId");
+
+            ResultSet rs = stmt.executeQuery();
+            List <Antenatal> antenatal_list = new ArrayList<>();
+
+            System.out.println("Null?"+rs.wasNull());
+            while (rs.next()) {
+                Antenatal antenatal = new Antenatal();
+
+                antenatal.setAntId(rs.getInt("antId"));
+                antenatal_list.add(antenatal);
+            }
+            con.close();
+            return antenatal_list;
+        } catch (Exception ex) {
+            ErrorDAO.Error_Add(new model.Error("ChbDAO", "Get_Antenatal_List", " Message: " + ex.getMessage(), now));
+            return null;
+        }
+
     }
 
     public static List<Vht> Get_Village_Vht_List(String VillageId) throws SQLException {
@@ -354,7 +387,7 @@ public class ChbDAO implements Serializable
                 maternity.setAdmissionNo(rs.getInt("admissionNo"));
                 maternity.setAncNo(rs.getString("ancNo"));
                 maternity.setIpdNo(rs.getInt("ipdNo"));
-                maternity.setNin(rs.getInt("nin"));
+                maternity.setNin(rs.getString("nin"));
                 maternity.setClientSurname(rs.getString("clientSurname"));
                 maternity.setClientGivenName(rs.getString("clientGivenName"));
                 maternity.setAge(rs.getInt("age"));
@@ -443,7 +476,7 @@ public class ChbDAO implements Serializable
                 maternity.setDateOfDischarge(rs.getDate("dateOfDischarge").toLocalDate());
                 maternity.setTimeOfDischarge(rs.getTime("timeOfDischarge").toLocalTime());
                 maternity.setRecordDate(rs.getTimestamp("recordDate").toLocalDateTime());
-                maternity.setUserId(rs.getInt("userID"));
+                maternity.setUserId(rs.getInt("userId"));
 
                 maternity_list.add(maternity);
             }
@@ -508,7 +541,7 @@ public class ChbDAO implements Serializable
                     + "babyBreathing6, llnsGiven, babyCondition, motherFinalDiagnosis, motherBleeding24, motherBP24, "
                     + "babyCheckedCord24, babyBreastFeeding24, babyBreathing24, iycf, iycfOption, "
                     + "counselingDischarged, materNutrCouns. conditionOfMotherAtDischarge, nameOfPersonDischarging, "
-                    + "cadreOfPersonDischarging, dateOfDischarge, timeOfDischarge, userID)"
+                    + "cadreOfPersonDischarging, dateOfDischarge, timeOfDischarge, userId)"
                     + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                     + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                     + "?,?,?,)");
@@ -518,7 +551,7 @@ public class ChbDAO implements Serializable
             stmt.setInt(3, new_maternity.getAdmissionNo());
             stmt.setString(4, new_maternity.getAncNo());
             stmt.setInt(5, new_maternity.getIpdNo());
-            stmt.setInt(6, new_maternity.getNin());
+            stmt.setString(6, new_maternity.getNin());
             stmt.setString(7, new_maternity.getClientSurname());
             stmt.setString(8, new_maternity.getClientGivenName());
             stmt.setInt(9, new_maternity.getAge());
@@ -694,7 +727,7 @@ public class ChbDAO implements Serializable
                 maternity.setAdmissionNo(rs.getInt("admissionNo"));
                 maternity.setAncNo(rs.getString("ancNo"));
                 maternity.setIpdNo(rs.getInt("ipdNo"));
-                maternity.setNin(rs.getInt("nin"));
+                maternity.setNin(rs.getString("nin"));
                 maternity.setClientSurname(rs.getString("clientSurname"));
                 maternity.setClientGivenName(rs.getString("clientGivenName"));
                 maternity.setAge(rs.getInt("age"));
@@ -787,7 +820,7 @@ public class ChbDAO implements Serializable
                 maternity.setDateOfDischarge(rs.getDate("dateOfDischarge").toLocalDate());
                 maternity.setTimeOfDischarge(rs.getTime("timeOfDischarge").toLocalTime());
                 maternity.setRecordDate(rs.getTimestamp("recordDate").toLocalDateTime());
-                maternity.setUserId(rs.getInt("userID"));
+                maternity.setUserId(rs.getInt("userId"));
 
             }
             con.close();
@@ -857,7 +890,7 @@ public class ChbDAO implements Serializable
             stmt.setInt(3, existing_maternity.getAdmissionNo());
             stmt.setString(4, existing_maternity.getAncNo());
             stmt.setInt(5, existing_maternity.getIpdNo());
-            stmt.setInt(6, existing_maternity.getNin());
+            stmt.setString(6, existing_maternity.getNin());
             stmt.setString(7, existing_maternity.getClientSurname());
             stmt.setString(8, existing_maternity.getClientGivenName());
             stmt.setInt(9, existing_maternity.getAge());
