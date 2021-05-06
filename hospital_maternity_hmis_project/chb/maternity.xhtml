@@ -42,8 +42,9 @@
                             </p:commandButton>
 
                             <p:confirmDialog global="true" responsive="true" width="350">
-                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                                <p:commandButton value="No" type="button"
+                                                 styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"/>
                             </p:confirmDialog>
 
                         </p:panel>
@@ -52,9 +53,10 @@
 
                             <!-- ADMISSION information -->
                             <p:tab title="Admission Information" titleStyle="font-size: 15px;">
-                                <o:validateAll id="validate_admission" invalidateAll="false" message="Missing fields in Admission Tab"
+                                <o:validateAll id="validate_admission" invalidateAll="false"
+                                               message="Missing fields in Admission Tab"
                                                showMessageFor="@global"
-                                                     components="admission_date admission_time admission_no anc_no ipd_no nin
+                                               components="admission_date admission_time admission_no anc_no ipd_no nin
                                                      surname given_name age client_category subcounty parish village
                                                      gravidity parity gestation_age term_preterm reason_admission
                                                      who_clinical cd4_results cd4_date viral_results viral_date">
@@ -161,10 +163,13 @@
                                                                  value="#{chbBean.new_maternity.nin}"
                                                                  id="nin"
                                                                  disabled="#{not chbBean.new_maternity.hasNin}"
-                                                                 validatorMessage="Please enter a valid NIN">
-                                                        <f:validateRegex pattern="[A-Za-z](M|m|F|f)[0-9]{2}[A-Za-z0-9]{10}"/>
+                                                                 validatorMessage="Invalid NIN">
+                                                        <f:validateRegex
+                                                                pattern="[A-Za-z](M|m|F|f)[0-9]{2}[A-Za-z0-9]{10}"/>
                                                     </p:inputText>
-                                                    <p:tooltip for="nin" value="Enter the 14 character NIN of the client" position="top"/>
+                                                    <p:tooltip for="nin"
+                                                               value="Enter the 14 character NIN of the client"
+                                                               position="bottom"/>
                                                     <br/>
                                                     <h:message errorStyle="color: red" for="nin"/>
                                                 </h:panelGroup>
@@ -189,7 +194,7 @@
                                                                 <p:inputText type="text"
                                                                              value="#{chbBean.new_maternity.clientSurname}"
                                                                              id="surname"
-                                                                             validatorMessage="Name is invalid">
+                                                                             validatorMessage="Invalid Name">
                                                                     <f:validateRegex pattern="[A-Za-z]*"/>
                                                                 </p:inputText>
                                                                 <br/>
@@ -202,7 +207,7 @@
                                                                 <p:inputText type="text"
                                                                              value="#{chbBean.new_maternity.clientGivenName}"
                                                                              id="given_name"
-                                                                             validatorMessage="Name is invalid">
+                                                                             validatorMessage="Invalid Name">
                                                                     <f:validateRegex pattern="[A-Za-z]*"/>
                                                                 </p:inputText>
                                                                 <br/>
@@ -478,11 +483,12 @@
 
                             <!-- DELIVERY information -->
                             <p:tab title="Delivery Information" titleStyle="font-size: 15px;">
-                                <o:validateAllOrNone id="validate_delivery" invalidateAll="false" message="Missing fields in Delivery Tab"
+                                <o:validateAllOrNone id="validate_delivery" invalidateAll="false"
+                                                     message="Missing fields in Delivery Tab"
                                                      showMessageFor="@global"
                                                      components="initial_result_woman tfv_woman initial_result_partner
                                                      tfv_partner art_code_partner art_code art_no ctx syphillis_woman
-                                                     hepb_woman syphillis_partner hepb_partner muac inr_no delivery_mode
+                                                     hepb_woman syphillis_partner hepb_partner muac delivery_mode
                                                      delivery_date delivery_time live_births"/>
 
                                 <p:panel id="new_delivery">
@@ -759,7 +765,16 @@
                                                                             pattern="(ND|([0-90-9.0-9]+ (R|Y|G)))"/>
                                                                 </p:inputText>
                                                                 <br/>
+                                                                <h:message errorStyle="color:red" for="muac"/>
+                                                                <p:tooltip for="muac"
+                                                                           position="bottom">
+                                                                    Enter the MUAC of client with format xx.x R|Y|G. For example, 22.5 Y
+                                                                    <br/>
+                                                                    If not done, enter ND
+                                                                </p:tooltip>
                                                                 <br/>
+                                                                <br/>
+
                                                                 Inr No.
                                                                 <br/>
                                                                 <p:inputText id="inr_no" type="text"
@@ -818,7 +833,7 @@
                                                             <br/>
                                                             <p:inputText id="live_births" type="text"
                                                                          value="#{chbBean.new_maternity.liveBirths}"
-                                                                         validatorMessage="Invalid number">
+                                                                         validatorMessage="Must be at least 0">
                                                                 <f:validateLongRange minimum="0"/>
                                                             </p:inputText>
                                                             <br/>
@@ -881,7 +896,8 @@
 
                             <!-- CHILD information -->
                             <p:tab title="Child Information" titleStyle="font-size: 15px;">
-                                <o:validateAllOrNone id="validate_child" invalidateAll="false" message="Missing fields in Child Tab"
+                                <o:validateAllOrNone id="validate_child" invalidateAll="false"
+                                                     message="Missing fields in Child Tab"
                                                      showMessageFor="@global"
                                                      components="apgar sex breathing skin warmth breast_fed weight
                                                      risk_status arvs arvs_duration bcg polio"/>
@@ -903,6 +919,13 @@
                                                              validatorMessage="Invalid format">
                                                     <f:validateRegex pattern="^(10|[0-9]{1})\/(10|[0-9]{1})( A)?"/>
                                                 </p:inputText>
+
+                                                <p:tooltip for="apgar" position="right">
+                                                    Write the Apgar score both in the 1st and 5th minute.
+                                                    <br/>
+                                                    Add "A" if with Asphyxia. e.g 5/10 A
+                                                </p:tooltip>
+
                                                 <br/>
                                                 <h:message errorStyle="color: red" for="apgar"/>
                                             </p:column>
@@ -1080,7 +1103,8 @@
 
                             <!-- DISCHARGE information -->
                             <p:tab title="Discharge Information" titleStyle="font-size: 15px;">
-                                <o:validateAllOrNone id="validate_discharge" invalidateAll="false" message="Missing fields in Discharge Tab"
+                                <o:validateAllOrNone id="validate_discharge" invalidateAll="false"
+                                                     message="Missing fields in Discharge Tab"
                                                      showMessageFor="@global"
                                                      components="planning_method other_methods planning_date treatment
                                                      diagnosis deliver_name deliver_cadre transfer_name transfer_where
@@ -1230,11 +1254,25 @@
                                                                             <p:column>
                                                                                 Blood Pressure
                                                                                 <br/>
-                                                                                <p:inputText id="motherSyst6" type="number"
-                                                                                             value="#{chbBean.new_maternity.motherSyst6}"/>
+                                                                                <p:inputText id="motherSyst6"
+                                                                                             type="number" style="max-width: 30px;"
+                                                                                             value="#{chbBean.new_maternity.motherSyst6}"
+                                                                                             validatorMessage="Must be at least 0">
+                                                                                    <f:validateLongRange minimum="0"/>
+                                                                                </p:inputText>
+                                                                                <p:tooltip for="motherSyst6" position="bottom">
+                                                                                    Systolic
+                                                                                </p:tooltip>
                                                                                 /
-                                                                                <p:inputText id="motherDias6" type="number"
-                                                                                             value="#{chbBean.new_maternity.motherDias6}"/>
+                                                                                <p:inputText id="motherDias6"
+                                                                                             type="number" style="max-width: 30px;"
+                                                                                             value="#{chbBean.new_maternity.motherDias6}"
+                                                                                             validatorMessage="Must be at least 0">
+                                                                                    <f:validateLongRange minimum="0"/>
+                                                                                </p:inputText>
+                                                                                <p:tooltip for="motherDias6" position="bottom">
+                                                                                    Diastolic
+                                                                                </p:tooltip>
                                                                                 <br/>
                                                                             </p:column>
                                                                         </p:row>
@@ -1358,11 +1396,25 @@
                                                                             <p:column>
                                                                                 Blood Pressure
                                                                                 <br/>
-                                                                                <p:inputText id="motherSyst24" type="number"
-                                                                                             value="#{chbBean.new_maternity.motherSyst24}"/>
+                                                                                <p:inputText id="motherSyst24"
+                                                                                             type="number" style="max-width: 30px;"
+                                                                                             value="#{chbBean.new_maternity.motherSyst24}"
+                                                                                             validatorMessage="Must be at least 0">
+                                                                                    <f:validateLongRange minimum="0"/>
+                                                                                </p:inputText>
+                                                                                <p:tooltip for="motherSyst24" position="bottom">
+                                                                                    Systolic
+                                                                                </p:tooltip>
                                                                                 /
-                                                                                <p:inputText id="motherDias24" type="number"
-                                                                                             value="#{chbBean.new_maternity.motherDias24}"/>
+                                                                                <p:inputText id="motherDias24"
+                                                                                             type="number" style="max-width: 30px;"
+                                                                                             value="#{chbBean.new_maternity.motherDias24}"
+                                                                                             validatorMessage="Must be at least 0">
+                                                                                    <f:validateLongRange minimum="0"/>
+                                                                                </p:inputText>
+                                                                                <p:tooltip for="motherDias24" position="bottom">
+                                                                                    Diastolic
+                                                                                </p:tooltip>
                                                                                 <br/>
                                                                             </p:column>
                                                                         </p:row>
@@ -1568,7 +1620,8 @@
                                 <p:commandButton value="Edit"
                                                  style="font-size: 12px;font-weight: bold;"
                                                  action="#{chbBean.retrieveForm(maternity_list)}"
-                                                 update=":maternity_form" process="@this" onsuccess="location.reload();">
+                                                 update=":maternity_form" process="@this"
+                                                 onsuccess="location.reload();">
                                 </p:commandButton>
                             </p:column>
 
