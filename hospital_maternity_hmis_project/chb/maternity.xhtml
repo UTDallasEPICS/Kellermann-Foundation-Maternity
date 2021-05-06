@@ -37,7 +37,15 @@
                             <p:commandButton value="Clear" style="font-size: 12px;font-weight: bold; "
                                              action="#{chbBean.clear_maternity()}"
                                              update="new_maternity,maternity_list,:maternity_form"
-                                             process="@this" onsuccess="location.reload();"/>
+                                             process="@this" onsuccess="location.reload();">
+                                <p:confirm header="Confirmation" message="Are you sure you want to clear form?"/>
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" responsive="true" width="350">
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                            </p:confirmDialog>
+
                         </p:panel>
 
                         <p:tabView id="maternity_tab">
@@ -45,6 +53,7 @@
                             <!-- ADMISSION information -->
                             <p:tab title="Admission Information" titleStyle="font-size: 15px;">
                                 <o:validateAll id="validate_admission" invalidateAll="false" message="Missing fields in Admission Tab"
+                                               showMessageFor="@global"
                                                      components="admission_date admission_time admission_no anc_no ipd_no nin
                                                      surname given_name age client_category subcounty parish village
                                                      gravidity parity gestation_age term_preterm reason_admission
@@ -470,6 +479,7 @@
                             <!-- DELIVERY information -->
                             <p:tab title="Delivery Information" titleStyle="font-size: 15px;">
                                 <o:validateAllOrNone id="validate_delivery" invalidateAll="false" message="Missing fields in Delivery Tab"
+                                                     showMessageFor="@global"
                                                      components="initial_result_woman tfv_woman initial_result_partner
                                                      tfv_partner art_code_partner art_code art_no ctx syphillis_woman
                                                      hepb_woman syphillis_partner hepb_partner muac inr_no delivery_mode
@@ -872,6 +882,7 @@
                             <!-- CHILD information -->
                             <p:tab title="Child Information" titleStyle="font-size: 15px;">
                                 <o:validateAllOrNone id="validate_child" invalidateAll="false" message="Missing fields in Child Tab"
+                                                     showMessageFor="@global"
                                                      components="apgar sex breathing skin warmth breast_fed weight
                                                      risk_status arvs arvs_duration bcg polio"/>
                                 <p:panel id="new_child">
@@ -1070,6 +1081,7 @@
                             <!-- DISCHARGE information -->
                             <p:tab title="Discharge Information" titleStyle="font-size: 15px;">
                                 <o:validateAllOrNone id="validate_discharge" invalidateAll="false" message="Missing fields in Discharge Tab"
+                                                     showMessageFor="@global"
                                                      components="planning_method other_methods planning_date treatment
                                                      diagnosis deliver_name deliver_cadre transfer_name transfer_where
                                                      bleeding_6hrs motherSyst6 motherDias6 cord_6hrs breastfeeding_6hrs
