@@ -656,8 +656,8 @@ public class ChbDAO implements Serializable
                     + "babyBreathing6, llinsGiven, babyCondition, motherFinalDiagnosis, motherBleeding24, recordDate, "
                     + "babyCheckedCord24, babyBreastFeeding24, babyBreathing24, iycf, iycfOption, "
                     + "counselingDischarged, materNutrCouns, conditionOfMotherAtDischarge, motherTransferredWhere, nameOfPersonDischarging, "
-                    + "cadreOfPersonDischarging, dateOfDischarge, motherDias6, motherSyst6, motherDias24, "
-                    + "motherSyst24, userID, matID)"
+                    + "cadreOfPersonDischarging, dateOfDischarge, motherSyst6, motherDias6, motherSyst24, motherDias24, "
+                    + "userID, matID)"
                     + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                     + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                     + "?,?,?,?,?,?,?,?,?)");
