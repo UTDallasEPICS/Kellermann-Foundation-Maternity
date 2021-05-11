@@ -32,7 +32,7 @@
                                              style="font-size: 12px;font-weight: bold; "
                                              action="#{chbBean.save_maternity(userid.value)}"
                                              update="new_maternity,maternity_list,:maternity_form:notification">
-                                <f:ajax execute="@form" render="@form"/>
+                                <f:ajax execute="@form" render="@form @form my_custom_error_msg"/>
                             </p:commandButton>
                             <p:commandButton value="Clear" style="font-size: 12px;font-weight: bold; "
                                              action="#{chbBean.clear_maternity()}"
@@ -40,6 +40,12 @@
                                              process="@this" onsuccess="location.reload();">
                                 <p:confirm header="Confirmation" message="Are you sure you want to clear form?"/>
                             </p:commandButton>
+                            <br/>
+                            <h:panelGroup id="form_error">
+                            <h:outputText value="Please fix all problems in form before saving."
+                                          style="color: red"
+                                          rendered="#{facesContext.validationFailed}"/>
+                            </h:panelGroup>
 
                             <p:confirmDialog global="true" responsive="true" width="350">
                                 <p:commandButton value="No" type="button"
@@ -332,8 +338,8 @@
                                                                 <br/>
                                                                 <p:inputText id="phone" type="number"
                                                                              value="#{chbBean.new_maternity.phoneNumber}"
-                                                                             validatorMessage="Must be 9 digits">
-                                                                    <f:validateRegex pattern="[0-9]{9}"/>
+                                                                             validatorMessage="Must be 9-10 digits">
+                                                                    <f:validateRegex pattern="[0-9]{9,10}"/>
                                                                 </p:inputText>
                                                                 <br/>
                                                                 <h:message errorStyle="color:red" for="phone"/>
