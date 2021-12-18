@@ -1,4 +1,3 @@
-
 # utdEPICS Kellermann Foundation Fall 2021
 
 ## Project Partner Description
